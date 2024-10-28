@@ -36,9 +36,9 @@
 ## 📰新闻
 **🔥PaddleMix 2024.10.22日直播课**
 
-- 🎉飞桨多模态大模型套件PaddleMIX开发大赛启动报名啦！万元奖金与项目证书等你拿。10月22日（周二）19:00🔑，百度资深研发工程师将为您详细解读如何开展基于PaddleMIX的多模态大模型数据提质以及赛题规则，扫描[二维码](#社区交流)敬请关注群通知。[🚀报名入口：](https://competition.atomgit.com/competitionInfo?id=d65b849bc916bd42e1bc5f5ee2562efa) 
+- 🎉飞桨多模态大模型套件PaddleMIX开发大赛启动报名啦！万元奖金与项目证书等你拿。10月22日（周二）19:00🔑，百度资深研发工程师将为您详细解读如何开展基于PaddleMIX的多模态大模型数据提质以及赛题规则，扫描[二维码](#社区交流)敬请关注群通知。[🚀报名入口：](https://competition.atomgit.com/competitionInfo?id=d65b849bc916bd42e1bc5f5ee2562efa)
 <div align="center">
-<img src="https://github.com/user-attachments/assets/327a22f7-b115-44d7-a28e-a4f2f5ae9be5" width="200px" align="middle" ></src>  
+<img src="https://github.com/user-attachments/assets/327a22f7-b115-44d7-a28e-a4f2f5ae9be5" width="200px" align="middle" ></src>
 
 </div>
 
@@ -72,7 +72,7 @@ PaddleMIX工具链包括数据处理、模型开发、预训练、精调和推�
 多模态生成✍️融合了文本💬与视觉👀的创造能力。涵盖了从文字生成图像🖼️到文字生成视频🎥的各类技术，包括 Stable Diffusion 3、Open-Sora等先进模型。我们在[ppdiffusers](ppdiffusers/README.md)提供了单图生成、多图合成和视频生成的实际应用，功能涉及艺术创作🎨、动画制作📽️、内容生成📝等。通过这些技术，可以在教育📚、娱乐🎮、广告📺等领域实现从静态图像到动态视频的创意生成。欢迎您的体验和探索～
 
 ### 特色应用效果示例如下（点击标题可快速跳转在线体验）：
-|                                                  [**ComfyUI创作工作流**](https://aistudio.baidu.com/community/app/106043)                                                  |                                                [**艺术风格二维码模型**](https://aistudio.baidu.com/community/app/1339)                                                |                                                  [**Mix叠图**](https://aistudio.baidu.com/community/app/1340)                                                  |         
+|                                                  [**ComfyUI创作工作流**](https://aistudio.baidu.com/community/app/106043)                                                  |                                                [**艺术风格二维码模型**](https://aistudio.baidu.com/community/app/1339)                                                |                                                  [**Mix叠图**](https://aistudio.baidu.com/community/app/1340)                                                  |
 | :--------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: |
 | <img src='https://github.com/PaddlePaddle/PaddleMIX/assets/35400185/36ba7261-1744-41a4-b1cb-c9e99f6931f2' width="300px"> | <img src='https://github.com/PaddlePaddle/Paddle/assets/22989727/ba091291-a1ee-49dc-a1af-fc501c62bfc8'  width="300px"> | <img src='https://github.com/PaddlePaddle/Paddle/assets/22989727/a71be5a0-b0f3-4aa8-bc20-740ea8ae6785'  width="300px"> |
 |                                                  [**二次元文生图**](https://aistudio.baidu.com/community/app/2/webUI?source=appCenter)                                                   |                                                     [**AI绘画｜50+Lora风格叠加**](https://aistudio.baidu.com/community/app/2848/webUI?source=appCenter)                                                     |                                               [**ControlNet｜图片局部重绘**](https://aistudio.baidu.com/community/app/1981/webUI?source=appCenter)                                               |
@@ -143,7 +143,9 @@ conda create -n paddlemix python=3.10 -y
 conda activate paddlemix
 ```
 ### 3. 安装PaddlePaddle
-#### 方法 1: 一键安装（推荐）
+
+#### 方法 1: 一键安装（GPU/CPU推荐）
+
 - CUDA 11.x或12.3
 - PaddlePaddle 3.0.0b1
 ```
@@ -153,8 +155,32 @@ sh build_paddle_env.sh
 #### 方法 2: 手动安装
 关于PaddlePaddle安装的详细教程请查看[Installation](https://www.paddlepaddle.org.cn/install/quick?docurl=/documentation/docs/zh/develop/install/pip/linux-pip.html)。
 
+### 4. 昇腾环境安装（可选）
 
-### 4. 安装依赖
+当前 PaddleMIX 支持昇腾 910B 芯片（更多型号还在支持中，如果您有其他型号的相关需求，请提交issue告知我们），昇腾驱动版本为 23.0.3。考虑到环境差异性，我们推荐使用飞桨官方提供的标准镜像完成环境准备。
+
+* 参考如下命令启动容器，ASCEND_RT_VISIBLE_DEVICES 指定可见的 NPU 卡号
+
+```shell
+docker run -it --name paddle-npu-dev -v $(pwd):/work \
+    --privileged --network=host --shm-size=128G -w=/work \
+    -v /usr/local/Ascend/driver:/usr/local/Ascend/driver \
+    -v /usr/local/bin/npu-smi:/usr/local/bin/npu-smi \
+    -v /usr/local/dcmi:/usr/local/dcmi \
+    -e ASCEND_RT_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" \
+    registry.baidubce.com/device/paddle-npu:cann80T13-ubuntu20-$(uname -m)-gcc84-py39 /bin/bash
+```
+
+* 在容器内安装飞桨
+
+```shell
+# 注意需要先安装飞桨 cpu 版本，目前仅支持python3.9版本
+python3.9 -m pip install paddlepaddle==3.0.0.dev20240520 -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
+python3.9 -m pip install paddle_custom_npu==3.0.0.dev20240719 -i https://www.paddlepaddle.org.cn/packages/nightly/npu/
+```
+
+
+### 5. 安装依赖
 
 #### 方法 1: 一键安装（推荐）
 
@@ -170,7 +196,7 @@ sh build_env.sh
 
 **快速开始**
 - [多模态理解：新手入门体验](paddlemix/examples/internvl2/README.md)
-- [多模态生成：零基础上手指南](ppdiffusers/examples/inference/README.md) 
+- [多模态生成：零基础上手指南](ppdiffusers/examples/inference/README.md)
 - [跨模态任务流水线：端到端流程演示](applications/README.md/#快速开始)
 
 **实操演练&范例**
@@ -178,7 +204,7 @@ sh build_env.sh
 - [SDXL应用：打造专属奥运海报生成器](https://aistudio.baidu.com/projectdetail/8251202)
 
 **多硬件使用**
-- [多硬件使用指南]()
+- 昇腾910B支持的模型列表，可参考[昇腾模型列表](./docs/hardware_support/npu_model_list.md)
 
 
 **数据准备&训练微调**
@@ -329,5 +355,3 @@ PP-InsCapTagger(Instance Capability Tagger) 是 DataCopilot 基于 PaddleMIX 实
 <div align="center">
     <img src="https://github.com/user-attachments/assets/ecf292da-9ac6-41cb-84b6-df726ef4522d" width="300" height="300" />
 </div>
-
-

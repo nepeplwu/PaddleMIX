@@ -38,9 +38,11 @@
 
 ## 2. 安装说明
 
+### 2.1 创建标准化环境
+
 当前 PaddleMIX 支持昇腾 910B 芯片，昇腾驱动版本为 23.0.3。考虑到环境差异性，我们推荐使用飞桨官方提供的标准镜像（支持x86服务器与Arm服务器）完成环境准备。
 
-* 参考如下命令启动容器，ASCEND_RT_VISIBLE_DEVICES 指定可见的 NPU 卡号
+参考如下命令启动容器，ASCEND_RT_VISIBLE_DEVICES 指定可见的 NPU 卡号
 
 ```shell
 docker run -it --name paddle-npu-dev -v $(pwd):/work \
@@ -52,7 +54,9 @@ docker run -it --name paddle-npu-dev -v $(pwd):/work \
     registry.baidubce.com/device/paddle-npu:cann80T13-ubuntu20-$(uname -m)-gcc84-py39 /bin/bash
 ```
 
-* 在容器内安装飞桨
+### 2.2 安装飞桨
+
+在容器内安装飞桨
 
 ```shell
 # 注意需要先安装飞桨 cpu 版本，目前仅支持python3.9版本
@@ -60,13 +64,19 @@ python -m pip install --pre paddlepaddle -i https://www.paddlepaddle.org.cn/pack
 python -m pip install --pre paddle-custom-npu -i https://www.paddlepaddle.org.cn/packages/nightly/npu/
 ```
 
-* 克隆PaddleMIX仓库
+### 2.3 安装PaddleMIX
+
+克隆PaddleMIX仓库
 
 ```shell
 # 使用最新发布的release/2.1分支
 git clone https://github.com/PaddlePaddle/PaddleMIX -b release/2.1
 cd PaddleMIX
-* 安装依赖
+```
+
+### 2.4 安装依赖
+
+```shell
 sh build_env.sh
 python -m pip install -U librosa
 ```
@@ -77,7 +87,7 @@ python -m pip install -U librosa
 
 InternVL2系列模型支持昇腾 910B 芯片上训练和推理，使用昇腾 910B 芯片训练推理时请先参考本文安装说明章节中的内容安装相应版本的飞桨框架。InternVL2模型训练推理使用方法参考如下:
 
-### 3.1 微调训练：
+### 3.1 微调训练
 
 #### 3.1.1 数据准备
 

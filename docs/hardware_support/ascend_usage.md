@@ -77,11 +77,15 @@ python -m pip install -U librosa
 
 InternVL2系列模型支持昇腾 910B 芯片上训练和推理，使用昇腾 910B 芯片训练推理时请先参考本文安装说明章节中的内容安装相应版本的飞桨框架。InternVL2模型训练推理使用方法参考如下:
 
-* 微调训练：
+### 3.1 微调训练：
 
-  * 参照[文档](../../paddlemix/examples/internvl2)进行数据准备；
+#### 3.1.1 数据准备
 
-  * 设置NPU相关环境变量
+参照[文档](../../paddlemix/examples/internvl2)进行数据准备；
+
+#### 3.1.2 环境设置
+
+设置NPU相关环境变量
 
 ```shell
 export FLAGS_use_stride_kernel=0
@@ -94,21 +98,22 @@ export CUSTOM_DEVICE_BLACK_LIST=set_value,set_value_with_tensor # set_value加�
 # 将ppdiffusers加入到PYTHONPATH中
 export PYTHONPATH=`pwd`/ppdiffusers:$PYTHONPATH
 ```
+#### 3.1.3 微调训练
 
-  * 执行微调训练，可以从[PaddleMIX工具箱介绍](../..//paddlemix/tools/README.md)查看详细的参数说明
+执行微调训练，可以从[PaddleMIX工具箱介绍](../..//paddlemix/tools/README.md)查看详细的参数说明
 
 ```shell
 # 以2B权重为例子
 sh paddlemix/examples/internvl2/shell/internvl2.0/2nd_finetune/internvl2_2b_internlm2_1_8b_dynamic_res_2nd_finetune_full.sh
 ```
 
-* 推理：
+### 3.2 推理
 
-  * 参照[文档](../../paddlemix/examples/internvl2)安装PaddleMIX和环境
+#### 3.2.1 环境设置
 
-  * 同样需要设置NPU相关的环境变量；
+参考上述步骤设置环境变量
 
-  * 执行推理
+#### 3.2.2 执行推理
 
 ```shell
 python paddlemix/examples/internvl2/chat_demo.py \
@@ -125,9 +130,11 @@ PPDiffusers 提供了 SD3 的的个性化微调训练样例，只需要少量主
 
 多模态生成Stable Diffusion系列模型支持昇腾 910B 芯片上训练和推理，使用昇腾 910B 芯片训练推理时请先参考本文安装说明章节中的内容安装相应版本的飞桨框架。SDXL模型训练推理使用方法参考如下:
 
-* 训练
+### 4.1 训练
 
-  * 昇腾 910B 芯片上进行SDXL训练时设置相应的环境变量
+#### 4.1.1 环境设置
+
+昇腾 910B 芯片上进行SDXL训练时设置相应的环境变量
 
 ```shell
 export FLAGS_npu_storage_format=0
@@ -145,7 +152,7 @@ export FLAGS_conv_workspace_size_limit=4096
 export PYTHONPATH=`pwd`/ppdiffusers:$PYTHONPATH
 ```
 
-  * 启动SDXL微调训练
+#### 4.1.2 启动SDXL微调训练
 
 ```shell
 python -u ppdiffusers/examples/text_to_image/train_text_to_image_sdxl.py \
@@ -165,7 +172,7 @@ python -u ppdiffusers/examples/text_to_image/train_text_to_image_sdxl.py \
   --output_dir="sdxl-pokemon-model"
 ```
 
-  * 启动SDXL LoRA训练
+#### 4.1.3 启动SDXL LoRA训练
 
 ```shell
 python -u ppdiffusers/examples/text_to_image/train_text_to_image_lora_sdxl.py \
@@ -183,9 +190,9 @@ python -u ppdiffusers/examples/text_to_image/train_text_to_image_lora_sdxl.py \
   --report_to="wandb"
 ```
 
-* 推理
+### 4.2 推理
 
-  * 推理脚本参考如下
+推理脚本参考如下
 
 ```python
 from ppdiffusers import StableDiffusionXLPipeline

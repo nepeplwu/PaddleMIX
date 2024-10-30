@@ -1,6 +1,6 @@
 # PaddleMIX昇腾使用说明
 
-为了满足用户对AI芯片多样化的需求， PaddleMIX 团队基于飞桨框架在硬件兼容性和灵活性方面的优势，深度适配了昇腾910芯片，为用户提供了国产计算芯片上的训推能力。只需安装说明安装多硬件版本的飞桨框架后，在模型配置文件中添加一个配置设备的参数，即可在相关硬件上使用PaddleMIX。当前PaddleMIX昇腾版适配涵盖了多模态理解模型 InternVL2 、 LLaVA 和多模态生成模型 SD3 、 SDXL 。未来我们将继续在用户使用的多种算力平台上适配 PaddleMIX 更多的模型，敬请期待。
+为了满足用户对AI芯片多样化的需求， PaddleMIX 团队基于飞桨框架在硬件兼容性和灵活性方面的优势，深度适配了昇腾910芯片，为用户提供了国产计算芯片上的训推能力。只需安装说明安装多硬件版本的飞桨框架后，在模型配置文件中添加一个配置设备的参数，即可在相关硬件上使用PaddleMIX。当前PaddleMIX昇腾版适配涵盖了多模态理解模型InternVL2、LLaVA和多模态生成模型SD3、SDXL。未来我们将继续在用户使用的多种算力平台上适配 PaddleMIX 更多的模型，敬请期待。
 
 ## 1. 模型列表
 <table align="center">
@@ -91,7 +91,7 @@ InternVL2系列模型支持昇腾 910B 芯片上训练和推理，使用昇腾 9
 
 #### 3.1.1 数据准备
 
-参照[文档](../../paddlemix/examples/internvl2)进行数据准备；
+参照[文档](../../paddlemix/examples/internvl2)进行数据准备
 
 #### 3.1.2 环境设置
 
@@ -133,8 +133,6 @@ python paddlemix/examples/internvl2/chat_demo.py \
 ```
 
 ## 4. 多模态生成
-
-PPDiffusers 发布版本 0.29.0，新增图像生成模型Stable Diffusion 3 (SD3)，支持 DreamBooth 训练及高性能推理；SD3、SDXL 适配昇腾硬件，提供昇腾训练芯片上的训推能力；
 
 PPDiffusers 提供了 SD3 的的个性化微调训练样例，只需要少量主题图像即可定制个性化 SD3 模型，支持 DreamBooth LoRA 微调及 DreamBooth 全参数微调。在推理上，提供 SD3 模型高性能推理实现。
 

@@ -170,8 +170,8 @@ docker run -it --name paddle-npu-dev -v $(pwd):/work \
 
 ```shell
 # Note: You need to install the CPU version of PaddlePaddle first. Currently, only Python 3.9 is supported.
-python3.9 -m pip install paddlepaddle==3.0.0.dev20240520 -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
-python3.9 -m pip install paddle_custom_npu==3.0.0.dev20240719 -i https://www.paddlepaddle.org.cn/packages/nightly/npu/
+python -m pip install --pre paddlepaddle -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
+python -m pip install --pre paddle-custom-npu -i https://www.paddlepaddle.org.cn/packages/nightly/npu/
 ```
 
 

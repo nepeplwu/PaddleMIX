@@ -175,8 +175,8 @@ docker run -it --name paddle-npu-dev -v $(pwd):/work \
 
 ```shell
 # 注意需要先安装飞桨 cpu 版本，目前仅支持python3.9版本
-python3.9 -m pip install paddlepaddle==3.0.0.dev20240520 -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
-python3.9 -m pip install paddle_custom_npu==3.0.0.dev20240719 -i https://www.paddlepaddle.org.cn/packages/nightly/npu/
+python -m pip install --pre paddlepaddle -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
+python -m pip install --pre paddle-custom-npu -i https://www.paddlepaddle.org.cn/packages/nightly/npu/
 ```
 
 

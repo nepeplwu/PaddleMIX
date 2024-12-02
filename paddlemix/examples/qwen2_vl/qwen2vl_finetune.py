@@ -179,6 +179,10 @@ class PreTrainingArguments(TrainingArguments):
         default=True,
         metadata={"help": ""},
     )
+    benchmark: bool = field(
+        default=False,
+        metadata={"help": "Whether or not run benchmark (True/False)."},
+    )
 
 
 class LazySupervisedDataset(Dataset):
@@ -469,10 +473,14 @@ def main():
             )
 
     # Load model
+    if "npu" in paddle.get_device():
+        is_bfloat16_supported = True
+    else:
+        is_bfloat16_supported = paddle.amp.is_bfloat16_supported()
     if training_args.fp16_opt_level == "O2":
         if training_args.fp16:
             dtype = "float16"
-        elif training_args.bf16 and paddle.amp.is_bfloat16_supported():
+        elif training_args.bf16 and is_bfloat16_supported:
             dtype = "bfloat16"
         else:
             raise ValueError("Please specific dtype: --fp16 or --bf16")

@@ -18,8 +18,8 @@
 ## 💌 Table of Contents
 - [💌 Table of Contents](#table-of-contents)
 - [📰 News](#news)
-- [🌈 Introduction](#introduction)
 - [📣 Latest Developments](#latest-developments)
+- [🌈 Introduction](#introduction)
 - [✨ Key Features](#key-features)
     - [📱 Rich Multimodal Capabilities](#rich-multimodal-capabilities)
     - [🧩 Simple Development Experience](#simple-development-experience)
@@ -34,13 +34,44 @@
 
 
 ## 📰 News
-**🔥PaddleMix Live Class on October 22, 2024**
+**🔥 PaddleMIX 2.1 Version Launch Livestream on October 31, 2024**
 
-- 🎉 The PaddleMIX Multimodal Model Suite Development Competition is now open for registration! Cash prizes and project certificates are waiting for you. On October 22 (Tuesday) at 19:00🔑, a senior Baidu R&D engineer will provide an in-depth explanation on how to enhance data quality using PaddleMIX multimodal models and the competition rules. Scan the [QR code](#community) to stay updated through the group announcements. [🚀 Registration Link:](https://competition.atomgit.com/competitionInfo?id=d65b849bc916bd42e1bc5f5ee2562efa)
+- 🎉 The PaddleMIX multimodal large model toolkit releases version 2.1! On October 31 (Thursday) at 20:00, Baidu development engineers provided a detailed interpretation of the toolkit updates, as well as the implementation details and case applications of PP-InsCapTagger, the multimodal data capability labeling model.
 
-<div align="center">
-<img src="https://github.com/user-attachments/assets/327a22f7-b115-44d7-a28e-a4f2f5ae9be5" width="200px" align="middle"></img>
-</div>
+## 📣 Latest Developments
+
+
+**🎉 2024.11.27 Added support for [Janus/JanusFlow](./paddlemix/examples/janus) inference**
+
+**🎉 2024.11.21 Added support for [MiniCPM-V-2_6](./paddlemix/examples/minicpm-v-2_6) inference**
+
+**🎉 2024.11.8 Support for [DenseConnector](./paddlemix/examples/llava_denseconnector) and [Aquila-VL-2B-llava-qwen](./paddlemix/examples/llava_onevision/) inference**
+
+**🎉 2024.11.1 Support for [LLaVA-OneVision](./paddlemix/examples/llava_onevision/) and [LLaVA-Critic](./paddlemix/examples/llava_critic/) inference**
+
+**🎉 2024.10.31 Welcome to the Update of External Developer's Creative [Tutorial Page](paddlemix_applications.md)**
+* 🌟 Since the launch of our Large Model Suite Premium Project Collection activity on September 6th, we have received 30 high-quality developer projects. Among them, 25 premium projects have successfully passed the platform evaluation and been featured.
+
+* 🙏 We sincerely thank all developers for their wonderful creations based on our suite! 🚀 We cordially invite you to share your creativity as well - welcome to publish your tutorials on public web pages or in the [PaddlePaddle AI Studio](https://aistudio.baidu.com/aistudio/community/multimodal?from=singlemessage) community!
+
+**🔥 PaddleMIX v2.1 Released on 2024.10.11**
+* Supports the [PaddleNLP 3.0 beta](https://github.com/PaddlePaddle/PaddleNLP/releases/tag/v3.0.0-beta0) version, allowing early access to its latest features.
+* Added cutting-edge models like [Qwen2-VL](./paddlemix/examples/qwen2_vl/), [InternVL2](./paddlemix/examples/internvl2/), and [Stable Diffusion 3 (SD3)](https://github.com/PaddlePaddle/PaddleMIX/blob/develop/ppdiffusers/examples/dreambooth/README_sd3.md).
+* Released our self-developed multimodal data capability tagging model [PP-InsCapTagger](./paddlemix/datacopilot/example/pp_inscaptagger/), which can be used for data analysis and filtering. Experimental cases show that it can reduce data volume by 50% while maintaining model performance, significantly improving training efficiency.
+
+* The multimodal large models InternVL2, LLaVA, SD3, and SDXL are now adapted to the Ascend 910B, offering training and inference capabilities on domestic computing chips.
+
+
+**PaddleMIX v2.0 Released on 2024.07.25**
+* Multimodal Understanding: Added LLaVA series, Qwen-VL, etc.; introduced Auto module to unify the SFT training process; introduced Mixtoken training strategy, increasing SFT throughput by 5.6 times.
+* Multimodal Generation: Released [PPDiffusers 0.24.1](./ppdiffusers/README.md), supporting video generation capabilities, and added LCM to the text-to-image model. Also added a PaddlePaddle version of PEFT and the Accelerate backend. Provided a ComfyUI plugin developed with PaddlePaddle.
+* Multimodal Data Processing Toolbox [DataCopilot](./paddlemix/datacopilot/): Supports custom data structures, data transformation, and offline format checks. Includes basic statistical information and data visualization functionality.
+
+**PaddleMIX v1.0 Released on 2023.10.7**
+* Added distributed training capabilities for vision-language pre-training models, and BLIP-2 now supports trillion-scale training.
+* Introduced the cross-modal application pipeline [AppFlow](./applications/README.md), which supports 11 cross-modal applications such as automatic annotation, image editing, and audio-to-image with one click.
+* [PPDiffusers](./ppdiffusers/README.md) released version 0.19.3, adding SDXL and related tasks.
+---
 
 ## 🌈 Introduction
 
@@ -81,28 +112,6 @@ Multimodal generation ✍️ combines the creative power of text 💬 and visual
 
 -----
 
-
-
-
-## 📣 Latest Developments
-
-**🔥 PaddleMIX v2.1 Released on 2024.10.11**
-* Supports the [PaddleNLP 3.0 beta](https://github.com/PaddlePaddle/PaddleNLP/releases/tag/v3.0.0-beta0) version, allowing early access to its latest features.
-* Added cutting-edge models like [Qwen2-VL](./paddlemix/examples/qwen2_vl/), [InternVL2](./paddlemix/examples/internvl2/), and [Stable Diffusion 3 (SD3)](https://github.com/PaddlePaddle/PaddleMIX/blob/develop/ppdiffusers/examples/dreambooth/README_sd3.md).
-* Released our self-developed multimodal data capability tagging model [PP-InsCapTagger](./paddlemix/datacopilot/example/pp_inscaptagger/), which can be used for data analysis and filtering. Experimental cases show that it can reduce data volume by 50% while maintaining model performance, significantly improving training efficiency.
-
-* The multimodal large models InternVL2, LLaVA, SD3, and SDXL are now adapted to the Ascend 910B, offering training and inference capabilities on domestic computing chips.
-
-
-**PaddleMIX v2.0 Released on 2024.07.25**
-* Multimodal Understanding: Added LLaVA series, Qwen-VL, etc.; introduced Auto module to unify the SFT training process; introduced Mixtoken training strategy, increasing SFT throughput by 5.6 times.
-* Multimodal Generation: Released [PPDiffusers 0.24.1](./ppdiffusers/README.md), supporting video generation capabilities, and added LCM to the text-to-image model. Also added a PaddlePaddle version of PEFT and the Accelerate backend. Provided a ComfyUI plugin developed with PaddlePaddle.
-* Multimodal Data Processing Toolbox [DataCopilot](./paddlemix/datacopilot/): Supports custom data structures, data transformation, and offline format checks. Includes basic statistical information and data visualization functionality.
-
-**PaddleMIX v1.0 Released on 2023.10.7**
-* Added distributed training capabilities for vision-language pre-training models, and BLIP-2 now supports trillion-scale training.
-* Introduced the cross-modal application pipeline [AppFlow](./applications/README.md), which supports 11 cross-modal applications such as automatic annotation, image editing, and audio-to-image with one click.
-* [PPDiffusers](./ppdiffusers/README.md) released version 0.19.3, adding SDXL and related tasks.
 
 ## ✨ Key Features
 
@@ -170,8 +179,8 @@ docker run -it --name paddle-npu-dev -v $(pwd):/work \
 
 ```shell
 # Note: You need to install the CPU version of PaddlePaddle first. Currently, only Python 3.9 is supported.
-python3.9 -m pip install paddlepaddle==3.0.0.dev20240520 -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
-python3.9 -m pip install paddle_custom_npu==3.0.0.dev20240719 -i https://www.paddlepaddle.org.cn/packages/nightly/npu/
+python -m pip install --pre paddlepaddle -i https://www.paddlepaddle.org.cn/packages/nightly/cpu/
+python -m pip install --pre paddle-custom-npu -i https://www.paddlepaddle.org.cn/packages/nightly/npu/
 ```
 
 
@@ -196,6 +205,7 @@ sh build_env.sh
 **Hands-On Practice & Examples**
 - [LLaVA Model: Full Process Practice from Training to Inference](https://aistudio.baidu.com/projectdetail/7917712)
 - [SDXL Application: Create Your Own Olympic Poster Generator](https://aistudio.baidu.com/projectdetail/8251202)
+- [PaddleMIX Multimodal AI Applications: Project Classification Overview](./paddlemix_applications.md)
 
 **Multi-Hardware Usage**
 - For the model list and usage supported by Ascend 910B, please refer to [Ascend Hardware Usage](./docs/hardware_support/ascend_usage.md)
@@ -218,6 +228,9 @@ sh build_env.sh
       <td>
         <b>Multimodal Generation</b>
       </td>
+      <td>
+        <b>Unified Multimodal Foundation Model</b>
+      </td>
     </tr>
     <tr valign="top">
       <td>
@@ -227,10 +240,13 @@ sh build_env.sh
         <ul>
             <li><a href="paddlemix/examples/clip">CLIP</a></li>
             <li><a href="paddlemix/examples/evaclip">EVA-CLIP</a></li>
-            <li><a href="paddlemix/examples/llava">LLaVA</a></li>
             <li><a href="paddlemix/examples/llava">LLaVA-1.5</a></li>
             <li><a href="paddlemix/examples/llava">LLaVA-1.6</a></li>
             <li><a href="paddlemix/examples/llava">LLaVA-NeXT</a></li>
+            <li><a href="paddlemix/examples/llava_onevision">LLaVA-onevision</a></li>
+            <li><a href="paddlemix/examples/llava_onevision">Aquila-VL-2B-llava-qwen</a></li>
+            <li><a href="paddlemix/examples/llava_critic">LLaVA-Critic</a></li>
+            <li><a href="paddlemix/examples/llava_denseconnector">LLaVA-DenseConnector</a></li>
             <li><a href="paddlemix/examples/qwen_vl">Qwen-VL</a></li>
             <li><a href="paddlemix/examples/qwen2_vl">Qwen2-VL</a></li>
             <li><a href="paddlemix/examples/internvl2">InternVL2</a></li>
@@ -287,6 +303,14 @@ sh build_env.sh
         <ul>
            <li><a href="ppdiffusers/ppdiffusers/pipelines/audioldm">AudioLDM</a></li>
            <li><a href="ppdiffusers/ppdiffusers/pipelines/audioldm2">AudioLDM2</a></li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+        </ul>
+          <li><b>Unified Multimodal Model</b></li>
+        <ul>
+          <li><a href="paddlemix/examples/janus">Janus</a></li>
         </ul>
       </td>
     </tr>

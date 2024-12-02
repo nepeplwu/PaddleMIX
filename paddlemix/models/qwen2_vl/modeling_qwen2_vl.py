@@ -43,6 +43,7 @@ logger = logging.get_logger(__name__)
 
 
 flash_attn_func, flash_attn_varlen_func = has_flash_attn_func()
+_IS_NPU = "npu" in paddle.get_device()
 
 
 def _get_unpad_data(attention_mask):
@@ -244,7 +245,7 @@ class VisionRotaryEmbedding(nn.Layer):
         self.inv_freq = 1.0 / theta ** (paddle.arange(start=0, end=dim, step=2, dtype="float32") / dim)
 
     def forward(self, seqlen: int) -> paddle.Tensor:
-        seq = paddle.arange(seqlen, dtype=self.inv_freq.dtype)
+        seq = paddle.arange(seqlen).cast(self.inv_freq.dtype)
         freqs = paddle.outer(x=seq, y=self.inv_freq)
         return freqs
 
@@ -273,7 +274,15 @@ class PatchEmbed(nn.Layer):
             [-1, self.in_channels, self.temporal_patch_size, self.patch_size, self.patch_size]
         )
 
-        hidden_states = self.proj(hidden_states.to(dtype=target_dtype)).reshape([-1, self.embed_dim])
+        if _IS_NPU:
+            # NOTE: In npu device, conv3d only support fp16 or bf16 dtype.
+            hidden_states = F.conv3d(
+                hidden_states.cast(paddle.bfloat16),
+                self.proj.weight.cast(paddle.bfloat16),
+                stride=self.proj._stride)
+            hidden_states = hidden_states.to(target_dtype).reshape([-1, self.embed_dim])
+        else:
+            hidden_states = self.proj(hidden_states.to(dtype=target_dtype)).reshape([-1, self.embed_dim])
         return hidden_states
 
 
@@ -567,7 +576,7 @@ class Qwen2VLAttention(nn.Layer):
             key_states = self.k_proj(hidden_states)
             value_states = self.v_proj(hidden_states)
         except:
-            hidden_states = hidden_states.astype("bfloat16")
+            hidden_states = hidden_states.astype(self.config.dtype)
             query_states = self.q_proj(hidden_states)
             key_states = self.k_proj(hidden_states)
             value_states = self.v_proj(hidden_states)
@@ -599,17 +608,18 @@ class Qwen2VLAttention(nn.Layer):
         key_states = repeat_kv(key_states, self.num_key_value_groups)
         value_states = repeat_kv(value_states, self.num_key_value_groups)
 
+        query_states = query_states.astype("float32") 
+        key_states = key_states.astype("float32")
+        value_states = value_states.astype("float32")
+        
         attn_weights = paddle.matmul(query_states, key_states.transpose([0, 1, 3, 2])) / math.sqrt(self.head_dim)
 
-        if attention_mask is not None:  # no matter the length, we just slice it
-            causal_mask = attention_mask[:, :, :, : key_states.shape[-2]]
-            attn_weights = attn_weights + causal_mask
+        if attention_mask is not None:
+            attn_weights = attn_weights + attention_mask
+        attn_weights = nn.functional.softmax(attn_weights, axis=-1, dtype="float32")
 
-        # upcast attention to fp32
-        attn_weights = nn.functional.softmax(x=attn_weights, axis=-1, dtype="float32")
-        attn_weights = nn.functional.dropout(x=attn_weights, p=self.attention_dropout, training=self.training)
-        attn_output = paddle.matmul(attn_weights.cast("bfloat16"), value_states.cast("bfloat16"))  # TODO: hard code
-
+        attn_output = paddle.matmul(attn_weights.cast(self.config.dtype), value_states.cast(self.config.dtype))
+        
         if attn_output.shape != [bsz, self.num_heads, q_len, self.head_dim]:
             raise ValueError(
                 f"`attn_output` should be of size {(bsz, q_len, self.num_heads, self.head_dim)}, but is"
@@ -859,8 +869,7 @@ class Qwen2VLDecoderLayer(nn.Layer):
         residual = hidden_states
 
         hidden_states = self.input_layernorm(hidden_states)
-
-        # Self Attention
+        
         hidden_states, self_attn_weights, present_key_value = self.self_attn(
             hidden_states=hidden_states,
             attention_mask=attention_mask,
@@ -1341,7 +1350,12 @@ class Qwen2VLForConditionalGeneration(Qwen2VLPreTrainedModel):
                     llm_pos_ids_list.append(paddle.arange(text_len).reshape([1, -1]).expand([3, -1]) + st_idx)
 
                 llm_positions = paddle.concat(llm_pos_ids_list, axis=1).reshape([3, -1])
-                position_ids[..., i, attention_mask[i] == 1] = llm_positions
+                if _IS_NPU:
+                    # NOTE: bool + id的混合索引赋值未生效，暂时绕过
+                    bool_indices = (attention_mask[i] == 1).unsqueeze(0).tile([position_ids.shape[0], 1])
+                    position_ids[:, i] = paddle.index_put(position_ids[:, i], [bool_indices], llm_positions.reshape([-1]))
+                else:
+                    position_ids[..., i, attention_mask[i] == 1] = llm_positions
                 mrope_position_deltas.append(llm_positions.max() + 1 - len(total_input_ids[i]))
             mrope_position_deltas = paddle.to_tensor(mrope_position_deltas).unsqueeze(1)
             return position_ids, mrope_position_deltas

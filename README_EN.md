@@ -205,7 +205,7 @@ sh build_env.sh
 - [PaddleMIX Multimodal AI Applications: Project Classification Overview](./paddlemix_applications.md)
 
 **Multi-Hardware Usage**
-- For the model list and usage supported by Ascend 910B, please refer to [Ascend Hardware Usage](./docs/hardware_support/ascend_usage.md)
+- For a list of models supported by Ascend 910B, please refer to the [Ascend Model List](./docs/hardware_support/npu_model_list.md).
 
 **Data Preparation & Fine-Tuning**
 - [Model Training and Fine-Tuning Techniques](paddlemix/tools/README.md)

@@ -217,7 +217,7 @@ sh build_env.sh
 - [飞桨PaddleMIX跨模态AI应用：项目分类汇总](./paddlemix_applications.md)
 
 **多硬件使用**
-- 昇腾910B支持的模型列表和使用方式，可以参考[昇腾硬件使用](./docs/hardware_support/ascend_usagec.md)
+- 昇腾910B支持的模型列表，可参考[昇腾模型列表](./docs/hardware_support/npu_model_list.md)
 
 
 **数据准备&训练微调**

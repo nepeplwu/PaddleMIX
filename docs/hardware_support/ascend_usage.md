@@ -138,10 +138,16 @@ PPDiffusers 提供了 SD3 的的个性化微调训练样例，只需要少量主
 
 多模态生成Stable Diffusion系列模型支持昇腾 910B 芯片上训练和推理，使用昇腾 910B 芯片训练推理时请先参考本文安装说明章节中的内容安装相应版本的飞桨框架。SDXL模型训练推理使用方法参考如下:
 
+### 4.1 训练
+
+#### 4.1.1 环境设置
+
+昇腾 910B 芯片上进行SDXL训练时设置相应的环境变量
 
 ```shell
 export FLAGS_npu_storage_format=0
 export FLAGS_use_stride_kernel=0
+export FLAGS_npu_scale_aclnn=True
 export FLAGS_allocator_strategy=auto_growth
 
 export MODEL_NAME="stabilityai/stable-diffusion-xl-base-1.0"
